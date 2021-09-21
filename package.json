@@ -1,6 +1,5 @@
 {
   "name": "intra42apipanel",
-  "main": "public/electron.js",
   "version": "0.1.0",
   "private": true,
   "author": "KaracaSoft",
@@ -18,7 +17,6 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.8",
     "@types/superagent": "^4.1.12",
-    "electron-is-dev": "^2.0.0",
     "mobx": "^6.3.3",
     "mobx-react": "^7.2.0",
     "react": "^17.0.2",
@@ -36,7 +34,7 @@
       "build/**/*",
       "node_modules/**/*"
     ],
-    "directories":{
+    "directories": {
       "buildResources": "assets"
     }
   },
@@ -44,10 +42,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "preelectron-pack": "yarn build",
-    "electron-pack": "electron-builder build -c.extraMetadata.main=build/electron.js -m -l -w"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -67,10 +62,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "concurrently": "^6.2.1",
-    "electron": "^14.0.1",
-    "electron-builder": "^22.11.7",
-    "wait-on": "^6.0.0"
-  }
+  "devDependencies": {}
 }
