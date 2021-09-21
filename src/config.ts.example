@@ -1,0 +1,5 @@
+export const CLIENT_ID = "";
+export const CLIENT_SECRET = "";
+
+export const BASE_URL = "https://api.intra.42.fr";
+export const REDIRECT_URI = "http://localhost:3000";

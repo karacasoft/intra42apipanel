@@ -1,3 +1,23 @@
+# An interface to manage information on Ecole 42
+
+I have developed this interface for management purposes while I was spending my time at 42Istanbul.
+This is simply a client-side application that can be used to connect through an Ecole 42 intranet
+application and manage information accordingly.
+It doesn't have a lot of features. This application is being developed according to the needs of
+the community.
+
+For now, this is packaged as an electron application. However, it is not required to use electron.
+The static .html/.js files can be uploaded on to a server for everyone to use. To build an
+electron package, use:
+
+### `yarn run electron-pack`
+
+To run the electron application for development, use:
+
+### `yarn run electron-dev`
+
+For other purposes please use the information below, which came with the `Create React App` script.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -44,3 +64,8 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+## CONTRIBUTION
+
+There are no rules for contribution for now. Simply fork the project and do whatever you want.
