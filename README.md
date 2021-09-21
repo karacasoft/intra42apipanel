@@ -6,21 +6,11 @@ application and manage information accordingly.
 It doesn't have a lot of features. This application is being developed according to the needs of
 the community.
 
-For now, this is packaged as an electron application. However, it is not required to use electron.
-The static .html/.js files can be uploaded on to a server for everyone to use. To build an
-electron package, use:
-
-### `yarn run electron-pack`
-
-To run the electron application for development, use:
-
-### `yarn run electron-dev`
-
-Before running these, you have to create a `config.ts` file in the `src` directory. You can use
+Before running/building, you have to create a `config.ts` file in the `src` directory. You can use
 the `config.ts.example` file as a template. You must fill in the blanks with your Intra 42
 Application's information.
 
-For other purposes please use the information below, which came with the `Create React App` script.
+For building please use the information below, which came with the `Create React App` script.
 
 # Getting Started with Create React App
 
