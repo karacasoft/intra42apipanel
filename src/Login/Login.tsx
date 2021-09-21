@@ -39,14 +39,13 @@ const Login = observer((props: LoginProps) => {
     }
 
     return <div>
-        <a href={`https://api.intra.42.fr/oauth/authorize?${encoded}`}>
-            <Button
-                    variant="contained"
-                    color="primary"
-                    fullWidth>
-                Login
-            </Button>
-        </a>
+        <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                onClick={() => LoginStore.login("")}>
+            Login
+        </Button>
         <p>{LoginStore.loginErrorMessage}</p>
     </div>;
 });

@@ -9,6 +9,8 @@ class UsersStoreClass {
     synching: boolean = false;
     userGetError: boolean = false;
 
+    changingPassword: { [k: string]: boolean } = {};
+
     constructor() {
         makeObservable(this, {
             filter: observable,
@@ -20,6 +22,10 @@ class UsersStoreClass {
             getUsers: action,
             getUsersSuccess: action.bound,
             getUsersError: action.bound,
+
+            changePassword: action,
+            changePasswordSuccess: action.bound,
+            changePasswordError: action.bound,
         });
         this.filter = {
             id: "",
@@ -52,9 +58,18 @@ class UsersStoreClass {
     }
 
     changePassword(user: User) {
-        Users.changePassword(user, `${user.login}.42istanbul`)
-                .then(ret => console.log(ret))
-                .catch(err => console.log(err));
+        this.changingPassword[user.login] = true;
+        Users.changePassword(user, `${user.login}.42Istanbul`)
+                .then((ret) => this.changePasswordSuccess(ret, user))
+                .catch((err) => this.changePasswordError(err, user));
+    }
+
+    changePasswordSuccess(ret: {}, user: User) {
+        this.changingPassword[user.login] = false;
+    }
+
+    changePasswordError(err: Error, user: User) {
+        this.changingPassword[user.login] = false;
     }
 }
 

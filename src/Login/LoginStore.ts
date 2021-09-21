@@ -76,7 +76,7 @@ class LoginStoreClass {
     loginSuccess() {
         this.loggingIn = false
         this.loggedIn = true;
-        this.getTokenUserInfo();
+        //this.getTokenUserInfo();
         APIConnector.saveToken();
     }
 

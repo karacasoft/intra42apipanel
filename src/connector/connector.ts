@@ -49,11 +49,10 @@ class API42Connector {
                 .post(`${BASE_URL}/oauth/token`)
                 .type("form")
                 .send({
-                    grant_type: "authorization_code",
+                    grant_type: "client_credentials",
                     client_id: CLIENT_ID,
                     client_secret: CLIENT_SECRET,
-                    code: code,
-                    redirect_uri: REDIRECT_URI,
+                    scope: "public",
                 })
                 .then(data => {
                     console.log(data.body);

@@ -13,9 +13,7 @@ import APIConnector from './connector/connector';
 import { runInAction } from 'mobx';
 
 APIConnector.loadToken();
-if(APIConnector.token) {
-  LoginStore.getTokenUserInfo();
-}
+//LoginStore.getTokenUserInfo();
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
