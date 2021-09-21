@@ -16,6 +16,10 @@ To run the electron application for development, use:
 
 ### `yarn run electron-dev`
 
+Before running these, you have to create a `config.ts` file in the `src` directory. You can use
+the `config.ts.example` file as a template. You must fill in the blanks with your Intra 42
+Application's information.
+
 For other purposes please use the information below, which came with the `Create React App` script.
 
 # Getting Started with Create React App
