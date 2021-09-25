@@ -1,8 +1,6 @@
 import { Button, CircularProgress, Typography } from "@material-ui/core";
 import { observer } from "mobx-react";
-import { useParams, useHistory } from 'react-router-dom';
 import { CLIENT_ID, REDIRECT_URI } from "../config";
-import APIConnector from "../connector/connector";
 import LoginStore from './LoginStore';
 
 interface LoginProps {

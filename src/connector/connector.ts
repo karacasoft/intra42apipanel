@@ -52,7 +52,7 @@ class API42Connector {
                     grant_type: "client_credentials",
                     client_id: CLIENT_ID,
                     client_secret: CLIENT_SECRET,
-                    scope: "public",
+                    scope: "public projects",
                 })
                 .then(data => {
                     console.log(data.body);
@@ -60,21 +60,29 @@ class API42Connector {
                     return data.body as TokenInfo;
                 })
                 .catch(err => {
-                    throw new APIError(err.response.code, err.response.text, err);
+                    throw new APIError(err.response.statusCode, err.response.text, err);
                 });
     }
 
-    private send_request<T>(r: SuperAgentRequest) {
+    private authorize<T>(r: SuperAgentRequest) {
         if(this.token) {
-            r.set("Authorization", `Bearer ${this.token}`)
+            r.set("Authorization", `Bearer ${this.token}`);
         }
-        return r.then(data => {
+    }
+
+    private send_request<T>(r: SuperAgentRequest) {
+        this.authorize<T>(r);
+        return r.then<T>(data => {
                 return data.body as T;
             })
             .catch(err => {
-                console.error(err.response.body);
-                throw new APIError(err.response.code, err.response.body, err.response.text, err);
+                throw new APIError(err.response.statusCode, err.response.body, err.response.text, err);
             });
+    }
+
+    private enqueue<T>(r: SuperAgentRequest) {
+        this.authorize<T>(r);
+        
     }
 
     get<T = {}>(url: string) {

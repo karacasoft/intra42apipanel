@@ -29,7 +29,7 @@ class UsersClass extends Endpoint<User, UserFilter> {
             user: {
                 password: pass,
             },
-        })
+        });
     }
 }
 
