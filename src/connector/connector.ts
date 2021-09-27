@@ -44,14 +44,14 @@ class API42Connector {
         }
     }
 
-    login(code: string): Promise<TokenInfo> {
+    login(clientId: string, clientSecret: string): Promise<TokenInfo> {
         return request
                 .post(`${BASE_URL}/oauth/token`)
                 .type("form")
                 .send({
                     grant_type: "client_credentials",
-                    client_id: CLIENT_ID,
-                    client_secret: CLIENT_SECRET,
+                    client_id: clientId,
+                    client_secret: clientSecret,
                     scope: "public projects",
                 })
                 .then(data => {
