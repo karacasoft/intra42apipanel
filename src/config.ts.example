@@ -1,3 +1,5 @@
+export const ASK_FOR_APP_CREDENTIALS = true;
+
 export const CLIENT_ID = "";
 export const CLIENT_SECRET = "";
 

@@ -13,6 +13,9 @@ import APIConnector from './connector/connector';
 import { runInAction } from 'mobx';
 
 APIConnector.loadToken();
+if(APIConnector.token) {
+  runInAction(() => LoginStore.loggedIn = true);
+}
 //LoginStore.getTokenUserInfo();
 
 const useStyles = makeStyles((theme: Theme) => createStyles({

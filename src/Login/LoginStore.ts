@@ -1,4 +1,5 @@
 import { action, computed, makeObservable, observable } from "mobx";
+import { CLIENT_ID, CLIENT_SECRET } from "../config";
 import APIError from "../connector/APIError";
 import APIConnector from "../connector/connector";
 import TokenEndpoint, { DetailedTokenInfo, TokenUserInfo } from "../connector/tokeninfo/token_endpoint";
@@ -8,6 +9,9 @@ class LoginStoreClass {
     loggedIn: boolean = false;
     loggingIn: boolean = false;
     loginErrorMessage?: string;
+
+    apiClientId: string = CLIENT_ID;
+    apiClientSecret: string = CLIENT_SECRET;
 
     tokenUserInfo?: TokenUserInfo;
     detailedTokenInfo?: DetailedTokenInfo;
@@ -65,9 +69,9 @@ class LoginStoreClass {
         APIConnector.removeToken();
     }
 
-    login(code: string) {
+    login() {
         this.loggingIn = true;
-        APIConnector.login(code)
+        APIConnector.login(this.apiClientId, this.apiClientSecret)
                 .then(this.loginSuccess)
                 .catch(this.loginError);
         
