@@ -15,7 +15,7 @@ jobs:
       - run:
           name: Build
           command: |
-            cp config.ts.example config.ts
+            cp src/config.ts.example src/config.ts
             yarn install
             yarn build
             
