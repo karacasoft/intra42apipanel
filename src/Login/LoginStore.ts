@@ -1,7 +1,7 @@
 import { action, computed, makeObservable, observable } from "mobx";
 import { CLIENT_ID, CLIENT_SECRET } from "../config";
 import APIError from "../connector/APIError";
-import APIConnector from "../connector/connector";
+import APIConnector, { APIResponse } from "../connector/connector";
 import TokenEndpoint, { DetailedTokenInfo, TokenUserInfo } from "../connector/tokeninfo/token_endpoint";
 
 class LoginStoreClass {
@@ -54,8 +54,8 @@ class LoginStoreClass {
                 });
     }
 
-    getTokenUserInfoSuccess(info: TokenUserInfo) {
-        this.tokenUserInfo = info;
+    getTokenUserInfoSuccess(info: APIResponse<TokenUserInfo>) {
+        this.tokenUserInfo = info.data;
         this.loggedIn = true;
     }
 

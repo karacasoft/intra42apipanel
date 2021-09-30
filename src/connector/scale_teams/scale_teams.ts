@@ -1,5 +1,5 @@
 import APIConnector from "../connector";
-import Endpoint, { BaseFilter } from "../endpoint";
+import Endpoint, { BaseFilter, EndpointRequest } from "../endpoint";
 
 export interface ScaleTeam {
     id: number;
@@ -75,7 +75,7 @@ class ScaleTeamsClass extends Endpoint<ScaleTeam, ScaleTeamsFilter> {
     }
 
     getUserScaleTeams() {
-        return APIConnector.get<ScaleTeam[]>(`/v2/me/scale_teams${this.filterString}`);
+        return EndpointRequest.get<ScaleTeam[], ScaleTeamsFilter>(`/v2/me/scale_teams`);
     }
 }
 

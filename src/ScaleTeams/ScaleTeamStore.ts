@@ -1,10 +1,13 @@
 import { action, makeObservable, observable } from "mobx";
+import { APIResponse } from "../connector/connector";
 import ScaleTeams, { ScaleTeam, ScaleTeamsFilter } from "../connector/scale_teams/scale_teams";
 
 class ScaleTeamStoreClass {
 
     filter: Partial<ScaleTeamsFilter>;
     scaleTeams: ScaleTeam[] = [];
+
+    currentPage: number = 0;
 
     gettingScaleTeams: boolean = false;
 
@@ -45,23 +48,25 @@ class ScaleTeamStoreClass {
 
     getScaleTeams() {
         this.gettingScaleTeams = true;
-        ScaleTeams.filter = this.filter;
         ScaleTeams.get()
+                .setFilter(this.filter)
+                .execute()
                 .then(this.getScaleTeamsSuccess)
                 .catch(this.getScaleTeamsError);
     }
 
     getUserScaleTeams() {
         this.gettingScaleTeams = true;
-        ScaleTeams.filter = this.filter;
         ScaleTeams.getUserScaleTeams()
+                .setFilter(this.filter)
+                .execute()
                 .then(this.getScaleTeamsSuccess)
                 .catch(this.getScaleTeamsError);
     }
 
-    getScaleTeamsSuccess(res: ScaleTeam[]) {
+    getScaleTeamsSuccess(res: APIResponse<ScaleTeam[]>) {
         this.gettingScaleTeams = false;
-        this.scaleTeams = res;
+        this.scaleTeams = res.data;
     }
 
     getScaleTeamsError(err: Error) {

@@ -1,6 +1,7 @@
 import request, { SuperAgentRequest } from "superagent";
-import { BASE_URL, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from "../config";
+import { BASE_URL } from "../config";
 import APIError from "./APIError";
+import RequestScheduler from "./request_scheduler";
 
 export interface TokenInfo {
     access_token: string;
@@ -9,6 +10,12 @@ export interface TokenInfo {
     refresh_token: string;
     scope: string;
     created_at: number;
+}
+
+export interface APIResponse<T> {
+    data: T;
+    page?: number;
+    total?: number;
 }
 
 class API42Connector {
@@ -64,63 +71,67 @@ class API42Connector {
                 });
     }
 
-    private authorize<T>(r: SuperAgentRequest) {
+    private authorize(r: SuperAgentRequest) {
         if(this.token) {
             r.set("Authorization", `Bearer ${this.token}`);
         }
     }
 
-    private send_request<T>(r: SuperAgentRequest) {
-        this.authorize<T>(r);
-        return r.then<T>(data => {
-                return data.body as T;
+    send_request<T>(r: SuperAgentRequest): Promise<APIResponse<T>> {
+        this.authorize(r);
+        return r.then<APIResponse<T>>(data => {
+                const total = data.headers["x-total"];
+                const page = data.headers["x-page"];
+                console.log(page);
+                console.log(total);
+                console.log(data.headers);
+                return {
+                    data: data.body as T,
+                    total,
+                    page,
+                };
             })
             .catch(err => {
                 throw new APIError(err.response.statusCode, err.response.body, err.response.text, err);
             });
     }
 
-    private enqueue<T>(r: SuperAgentRequest) {
-        this.authorize<T>(r);
-        
-    }
-
     get<T = {}>(url: string) {
         const r = request
                 .get(this._url_beautify(url));
-        return this.send_request<T>(r);
+        return RequestScheduler.enqueue<T>(r);
     }
 
-    post<T extends object = {}>(url: string, data?: string | object) {
+    post<T = {}>(url: string, data?: string | object) {
         const r = request
                 .post(this._url_beautify(url))
                 .type("application/json")
                 .send(data)
-        return this.send_request<T>(r);
+        return RequestScheduler.enqueue<T>(r);
     }
 
-    put<T extends object = {}>(url: string, data?: string | object) {
+    put<T = {}>(url: string, data?: string | object) {
         const r = request
                 .put(this._url_beautify(url))
                 .type("application/json")
                 .send(data)
-        return this.send_request<T>(r);
+        return RequestScheduler.enqueue<T>(r);
     }
 
-    patch<T extends object = {}>(url: string, data?: string | object) {
+    patch<T = {}>(url: string, data?: string | object) {
         const r = request
                 .patch(this._url_beautify(url))
                 .type("application/json")
                 .send(data)
-        return this.send_request<T>(r);
+        return RequestScheduler.enqueue<T>(r);
     }
 
-    delete<T extends object = {}>(url: string, data?: string | object) {
+    delete<T = {}>(url: string, data?: string | object) {
         const r = request
                 .delete(this._url_beautify(url))
                 .type("application/json")
                 .send(data)
-        return this.send_request<T>(r);
+        return RequestScheduler.enqueue<T>(r);
     }
 
 }

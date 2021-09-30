@@ -1,9 +1,13 @@
 import { action, makeObservable, observable } from "mobx";
 import APIError from "../connector/APIError";
+import { APIResponse } from "../connector/connector";
 import Users, { User, UserFilter } from "../connector/users/users";
 
 class UsersStoreClass {
-    users: User[] = [];
+    users: {
+        [key: number]: User[],
+    } = {};
+    currentPage: number = 1;
     filter: Partial<UserFilter>;
 
     usersSynched: boolean = false;
@@ -24,11 +28,14 @@ class UsersStoreClass {
             userGetError: observable,
             synching: observable,
             selectedUser: observable,
+            currentPage: observable,
 
             changingPassword: observable,
             changePasswordErrors: observable,
             changePasswordErrorText: observable,
             changePasswordDialogOpen: observable,
+
+            resetUsers: action,
 
             getUsers: action,
             getUsersSuccess: action.bound,
@@ -61,16 +68,26 @@ class UsersStoreClass {
         };
     }
 
+    resetUsers() {
+        this.currentPage = 0;
+        this.users = {
+            [this.currentPage]: this.users[this.currentPage]
+        };
+    }
+
     getUsers() {
         this.synching = true;
-        Users.filter = this.filter;
+        const requestedPage = this.currentPage;
         Users.get()
-                .then(this.getUsersSuccess)
+                .setFilter(this.filter)
+                .setPage(this.currentPage)
+                .execute()
+                .then((data) =>  this.getUsersSuccess(data, requestedPage))
                 .catch(this.getUsersError);
     }
 
-    getUsersSuccess(users: User[]) {
-        this.users = users;
+    getUsersSuccess(users: APIResponse<User[]>, page: number) {
+        this.users[page] = users.data;
         this.synching = false;
         this.usersSynched = true;
     }

@@ -1,4 +1,13 @@
+// If the application is hosted remotely, you must set this to true
+// for security reasons. If, and only if, the application is hosted
+// locally you can put on default credentials below and set this to
+// true
 export const ASK_FOR_APP_CREDENTIALS = true;
+
+// This is the default API rate limit for 42 applications
+// Change only if you are allowed more requests per second
+export const SECONDS_PER_REQUEST = 0.5;
+export const RETRY_COUNT = 0;
 
 export const CLIENT_ID = "";
 export const CLIENT_SECRET = "";

@@ -5,6 +5,7 @@ import UsersFilter from "./UsersFilter";
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, makeStyles, TextField, Theme, Typography } from "@material-ui/core";
 import { createStyles } from "@material-ui/styles";
 import { ChangeEvent, useState } from "react";
+import { runInAction } from "mobx";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
@@ -38,16 +39,31 @@ const UsersTable = observer((props: UsersTableProps) => {
     const classes = useStyles();
     const [ newPasswordInDialog, setNewPasswordInDialog ] = useState("");
 
+    if(!UsersStore.synching && UsersStore.users[UsersStore.currentPage] === undefined) {
+        UsersStore.getUsers();
+    }
+
     return <div style={{ height: "100vh", width: "100vw" }}>
         <UsersFilter />
-        <Button onClick={() => UsersStore.getUsers()}
+        <Button onClick={() => {
+                    UsersStore.resetUsers();
+                    UsersStore.getUsers();
+                }}
                 disabled={UsersStore.synching}>
             {UsersStore.synching ? <CircularProgress /> : "Refresh"}
         </Button>
         <DataGrid
-                rows={[ ...UsersStore.users ]}
+                rows={UsersStore.users[UsersStore.currentPage] ? [ ...UsersStore.users[UsersStore.currentPage] ] : []}
                 columns={columns}
+                paginationMode="server"
+                page={UsersStore.currentPage - 1}
+                pageSize={30}
+                rowCount={1000}
+                pagination
+                loading={UsersStore.synching}
+                onPageChange={(newPage) => runInAction(() => UsersStore.currentPage = newPage + 1)}
                 />
+
         <Dialog open={UsersStore.changePasswordDialogOpen}
                 onClose={() => {
                     UsersStore.closeChangePasswordDialog();
