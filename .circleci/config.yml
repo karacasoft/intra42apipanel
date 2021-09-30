@@ -9,9 +9,11 @@ orbs:
 jobs:
   build:
     docker:
-      - image: alpine:3.7
+      - image: cimg/node:14.17.6
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
       - run:
           name: Build
           command: |
