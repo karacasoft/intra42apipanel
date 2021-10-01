@@ -11,6 +11,7 @@ import Sidebar from './Sidebar/Sidebar';
 import ScaleTeamTable from './ScaleTeams/ScaleTeamTable';
 import APIConnector from './connector/connector';
 import { runInAction } from 'mobx';
+import GradeReporting from './GradeReporting/GradeReporting';
 
 APIConnector.loadToken();
 if(APIConnector.token) {
@@ -43,6 +44,9 @@ function App() {
         </Route>
         <Route path="/users">
           <UsersTable />
+        </Route>
+        <Route path="/reporting">
+          <GradeReporting />
         </Route>
         <Route path="/">
 

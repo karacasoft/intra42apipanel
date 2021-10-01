@@ -43,7 +43,7 @@ const UsersTable = observer((props: UsersTableProps) => {
         UsersStore.getUsers();
     }
 
-    return <div style={{ height: "100vh", width: "100vw" }}>
+    return <div style={{ height: "100vh" }}>
         <UsersFilter />
         <Button onClick={() => {
                     UsersStore.resetUsers();

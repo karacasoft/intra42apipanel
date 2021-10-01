@@ -34,6 +34,10 @@ const Sidebar = observer((props: SidebarProps) => {
                     onClick={() => history.push("/scaleteams")}>
                 <ListItemText primary="Scale-teams" />
             </ListItem>
+            <ListItem button
+                    onClick={() => history.push("/reporting")}>
+                <ListItemText primary="Piscine Reporting" />
+            </ListItem>
         </List>
     </Paper>;
 });

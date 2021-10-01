@@ -31,6 +31,8 @@ class UsersClass extends Endpoint<User, UserFilter> {
             },
         });
     }
+
+    
 }
 
 const Users = new UsersClass();
