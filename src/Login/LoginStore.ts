@@ -23,6 +23,9 @@ class LoginStoreClass {
             loginErrorMessage: observable,
             tokenUserInfo: observable,
             detailedTokenInfo: observable,
+
+            apiClientId: observable,
+            apiClientSecret: observable,
             
             getTokenUserInfo: action.bound,
             getTokenUserInfoSuccess: action.bound,
